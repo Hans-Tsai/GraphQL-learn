@@ -1,3 +1,7 @@
+# GraphQL - Hans-Tsai own practice 
+### (Refered to the book which is called 'Learning GraphQL' and written by by Eve Porcello and Alex Banks.)
+[可參考作者書中範例的原始碼repository](https://github.com/moonhighway/learning-graphql)<br>
+
 Learning GraphQL
 =================
 The code samples for *Learning GraphQL* by Eve Porcello and Alex Banks, published by O'Reilly Media
