@@ -48,14 +48,6 @@ You don't need to know anything about graph theory to work with GraphQL, but it'
   ```
 
 
-
-
-
-
-
-
-
-
 Resource Links
 --------
 * [From REST to GraphQL](https://0x2a.sh/from-rest-to-graphql-b4e95e94c26b): An article about the differences between REST and GraphQL
