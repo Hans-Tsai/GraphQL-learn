@@ -4,13 +4,13 @@ GraphQL is a query language for your APIs and a runtime for fulfilling those que
 
 
 什麼是GraphQL?
-==================
+------
 - GraphQL是供API使用的查詢語言。它也是滿足資料查詢的runtime。GraphQL服務部規定使用哪種傳輸協定,但通常是透過HTTP來提供的
 - GraphQL是一種用戶端/伺服器端之間的通訊規格(spec)
 
 
 GraphQL 的設計準則
-==================
+------
 - 階層式
   + GraphQL query是階層式的,query有一些欄位在其他欄位裡面,且query的外型類似它回傳的資料
 - 以產品為中心
@@ -24,14 +24,14 @@ GraphQL 的設計準則
 
 
 GraphQL的緣起
-==================
+------
 - 在2012年,Facebook決定重建app的原生行動app,之後由Lee Byron、Nick Schrock、Dan Schafer的團隊決定站在用戶端的角度重新考慮他們的資料,於是他們開始著手建構了GraphQL這個查詢語言,並在2015/07月首次對外發表第一版的GraphQL規格,並推出`graphql.js`
 - REST (Representational State Transfer, 表現層狀態轉換)
   + REST是在2000年由Roy Fielding所發表的博士論文中所定義出來的API架構。他描述了一個資源導向的架構,可讓使用者在這個架構中,執行諸如`GET`、`PUT`、`POST`、`DELETE`...等動作來處理網路資源。我們可以將資源組成的網路當成一種虛擬狀態機,而那些REST動作(例: `GET`、`PUT`、`POST`、`DELETE`)是這個機制內的狀態改變
 
 
 REST的缺陷
-==================
+------
 - 隨著網路的發展,REST在某些狀況下已經顯露一些疲態了,GraphQL正是為了緩解這些疲態而造就的
 - REST 常見的缺點
   + OverFetch (過度擷取)
@@ -42,7 +42,7 @@ REST的缺陷
 
 
 現實世界的GraphQL
-==================
+------
 - 目前全世界有3個以GraphQL為主題的會議
   + 舊金山的GraphQL summit
   + 赫爾辛基的GraphQL Finland
