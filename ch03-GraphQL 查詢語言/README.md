@@ -53,7 +53,17 @@ GraphQL 查詢語言
 
 GraphQL API 工具
 ----
-- 
+- GraphQL社群建立了一些可用來和GraphQL API互動的開放原始碼工具。這些工具可讓你用GraphQL查詢語言來編寫query、將這些query送到GraphQL端點,以及查看JSON回應
+- 接下來將介紹2種可對著GraphQL API測試GraphQL query的熱門工具
+  + [GraphiQL](https://www.electronjs.org/apps/graphiql)
+    * GraphiQL是Facebook建造的瀏覽器內部整合式開發環境(IDE),可用來查詢與瀏覽GraphQL API
+    * 有許多的公用API都有提供GraphiQL介面以供查詢即時資料
+    * ![GraphiQL介面](./GraphiQL介面.png)
+      * GraphiQL的操作介面非常簡單,裡面有一個可讓你編寫`query` or `mutation` or `subscription`的面板、一個用來執行它的播放按鈕,以及一個顯示回應的面板。當按下Play按鈕來執行這個查詢之後,我們就會在右側面板上收到一個JSON格式的回應
+      * 我們也可以點開右上角的Docs視窗,它裡面定義了與目前的服務互動時需要知道的每一件事。這個文件是自動被加入GraphiQL的,因為它是從服務(daemon)的schema讀出來的。schema定義了服務可提供的資料,而GraphiQL會對schema執行一個自我查詢來自動建構文件
+      * 我們通常會用提供GraphQL 
+  + [GraphQL Playground](https://www.apollographql.com/docs/apollo-server/testing/graphql-playground/)
+    * 
 
 
 
