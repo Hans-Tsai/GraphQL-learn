@@ -62,9 +62,22 @@ GraphQL API 工具
       * GraphiQL的操作介面非常簡單,裡面有一個可讓你編寫`query` or `mutation` or `subscription`的面板、一個用來執行它的播放按鈕,以及一個顯示回應的面板。當按下Play按鈕來執行這個查詢之後,我們就會在右側面板上收到一個JSON格式的回應
       * 我們也可以點開右上角的Docs視窗,它裡面定義了與目前的服務互動時需要知道的每一件事。這個文件是自動被加入GraphiQL的,因為它是從服務(daemon)的schema讀出來的。schema定義了服務可提供的資料,而GraphiQL會對schema執行一個自我查詢來自動建構文件
       * 我們通常會用提供GraphQL 
-  + [GraphQL Playground](https://www.apollographql.com/docs/apollo-server/testing/graphql-playground/)
-    * 
-
+  + [GraphQL Playground](https://www.prisma.io/blog/introducing-graphql-playground-f1e0a018f05d)
+    * 由Prisma團隊所開發的, 提供與GraphiQL一樣的功能
+    * 要與GraphQL Playground互動,最簡單的方法是用瀏覽器前往[GraphQL Bin](https://www.graphqlbin.com/),並輸入一個端點,就可以使用GraphQL Playground來與資料互動了
+    * GraphQL Playground有一個重要的功能,就是它可以連同GraphQL request一起傳送HTTP標頭
+      * [GraphQL Playground with HTTP header](./GraphQL%20Playground%20with%20HTTP%20header.png)
+    * 也可以下載GraphQL Playground的桌機版本
+      * $ `brew cask install graphql-playground`
+    * 可參考[Public GraphQL APIs](https://github.com/APIs-guru/graphql-apis)裡面的範例做練習
+      * [SWAPI](http://graphql.org/swapi-graphql)
+        * 這是個Facebook專案,它是SWAPI REST API的包裝
+      * [GitHub API](https://developer.github.com/v4/explorer)
+        * GitHub GraphQL API是最大型的公用API之一,可讓我們傳送query、mutation來查看與改變GitHub的即時資料
+        * 需要先登入自己的GitHub帳號才能使用這個公用API
+      * [Yelp](https://www.yelp.com/developers/graphiql)
+        * Yelp維護這個可讓你用GraphiQL來查詢的GraphQL API
+        * 需要先建立一個Yelp帳號才能與Yelp API裡面的資料進行互動
 
 
 
