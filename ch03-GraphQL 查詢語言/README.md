@@ -113,8 +113,7 @@ GraphQL 查詢
         }
       ```
     * ![GraphQL Playground mulitple queries-success](./GraphQL%20Playground%20mulitple%20queries-success.png)
-
-
+- Query是一種GraphQL型態。我們稱它為根型態,因為這種形態對應一項操作,而操作是查詢文件的根。query可在GraphQL API中使用的欄位已被定義在該API的schema裡面了,這個schema文件會告訴我們那個Query型態有哪些欄位可以選擇
 
 
 
