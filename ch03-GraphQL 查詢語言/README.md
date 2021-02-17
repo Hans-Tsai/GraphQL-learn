@@ -24,7 +24,7 @@ GraphQL 查詢語言
 - GraphQL是按照規格來標準化的。無論你使用哪一種程式語言都可以實作
   + 其實`query`只是放在POST請求的內文中送給GraphQL端點的字串
   + 下面是一個GraphQL query,它是用GraphQL查詢語言寫成的字串
-    * ```javascript
+    * ```js
         {
           allLifts {
             name
@@ -37,7 +37,7 @@ GraphQL 查詢語言
       ```
   + 若要修改資料,你可以傳送mutation(變動)。`Mutation`的目的是改變關於app整體狀態的事物。我們可以使用mutation直接傳送執行改變所需的資料
     * 範例: 若我們希望用mutation來將id為panorama的纜椅改為open狀態
-      * ```javascript
+      * ```js
           mutation {
             setLiftStatus(id: "panorama" status: OPEN) {
               name
@@ -78,6 +78,44 @@ GraphQL API 工具
       * [Yelp](https://www.yelp.com/developers/graphiql)
         * Yelp維護這個可讓你用GraphiQL來查詢的GraphQL API
         * 需要先建立一個Yelp帳號才能與Yelp API裡面的資料進行互動
+
+
+GraphQL 查詢
+----
+- 我們可以參考書中範例[Snowtooth Mountain API](http://snowtooth.moonhighway.com),它是一座虛構的滑雪場,我們可以透過這個GraphQL API來提供即時、最新的纜椅和雪道狀態資訊,並且Snowtooth的滑雪巡邏員可以直接透過手機打開、關閉纜椅和雪道狀態資訊
+- 可以使用query(查詢)從API請求資料。query描述我們想要從GraphQL伺服器取得的資料。當我們傳送query時,就是以field(欄位)為單位索取資料。這些欄位對應伺服器回傳的JSON資料回應內的同一組欄位
+  + ```js
+      query {
+        allLifts {
+          name
+          status
+        }
+      }
+      ```
+- 當成功地發出的query後,會收到一個含有"資料"鍵的JSON文件。失敗的查詢會收到一個含有"錯誤"的JSON物件,在這個鍵底下的JSON資料就是錯誤的詳細消息。JSON回應也可能同時含有"資料"與"錯誤"
+  + ![GraphQL Playground query success](./GraphQL%20Playground%20query%20success.png)
+  + ![GraphQL Playground query error](./GraphQL%20Playground%20query%20error.png)
+- 可以在查詢文件裡面加入多的query,但每此只能執行一項操作
+  + 若我們可以在一個查詢文件中加入2項查詢操作時,會引發錯誤,GraphQL Playground會要求我們只能選擇一個query操作
+    * ![GraphQL Playground mulitple queries-error](./GraphQL%20Playground%20mulitple%20queries-error.png)
+  + 而從現在開始,我們可以開始漸漸地感受到GraphQL的優點。如果我們想要藉由一個請求來取得所有資料的話,就必須將它們全都放在同一個query裡面。我們可以用一個query操作來來索取各種不同的資料點,我們可以查詢目前處於**特定狀態**的`liftCount`、目前處於那種狀態的纜椅數量、每一個纜椅的`name`與`status`
+    * ```js
+        query liftsAndTrails {
+          liftCount(status: OPEN)
+          allLifts {
+            name
+            status
+          }
+          allTrails {
+            name
+            difficulty
+          }
+        }
+      ```
+    * ![GraphQL Playground mulitple queries-success](./GraphQL%20Playground%20mulitple%20queries-success.png)
+
+
+
 
 
 
