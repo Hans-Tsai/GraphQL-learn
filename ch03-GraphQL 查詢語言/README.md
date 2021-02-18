@@ -183,6 +183,37 @@ GraphQL 查詢
     * 在`liftToAccessTrail` query中,我們選擇一個名為"Dance Fight"的`Trail`。`groomed`欄位回傳一個布林純量型態,可讓我們知道`Dance Fight`是否被整理過了。`accessedByLifts`欄位回傳可帶著滑雪客前往`Dance Fight`雪道的纜椅
 
 
+Fragment(片段)
+----
+- fragment是可在多個操作中重複使用的選擇組
+  + 可以將fragment以及其操作的定義加入GraphQL查詢文件中
+- ```js
+    query {
+      Lift (id: "jazz-cat") {
+        name 
+        status
+        capacity
+        night
+        elevationGain
+        trailAccess {
+          name
+          difficulty
+        }
+      }
+      Trail(id: "river-run") {
+        name
+        difficulty
+        accessedByLifts {
+          name
+          status
+          capacity
+          night
+          elevationGain
+        }
+      }
+    }
+  ```
+  + ![multiple duplicate fields query without fragments](./multiple%20duplicate%20fields%20query%20without%20fragments.png)
 
 
 
