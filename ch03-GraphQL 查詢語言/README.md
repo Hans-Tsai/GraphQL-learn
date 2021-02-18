@@ -114,6 +114,33 @@ GraphQL 查詢
       ```
     * ![GraphQL Playground mulitple queries-success](./GraphQL%20Playground%20mulitple%20queries-success.png)
 - Query是一種GraphQL型態。我們稱它為根型態,因為這種形態對應一項操作,而操作是查詢文件的根。query可在GraphQL API中使用的欄位已被定義在該API的schema裡面了,這個schema文件會告訴我們那個Query型態有哪些欄位可以選擇
+  + 當我們在編寫query的時候,將需要的欄位放在大括號裡面來選擇他們,這些段落稱為選擇組(selection set),並且也可以在一個選擇組裡面方入另一個選擇組。這就是GraphQL API最大的優點,**我們能夠選擇需要的欄位,以及省略不想要的欄位**
+  + GraphQL API回傳的資料為JSON格式,並且使用與query一樣的外型來傳遞。它發出的每一個JSON欄位的名稱都與選擇組的欄位名稱一樣,而我們也可以在query中指定別名來改變回應物件的欄位名稱
+    * ![query alias](./query%20alias.png)
+- 可以傳入查詢引數來過濾GraphQL回傳的查詢結果。引數是與一個查詢欄位有關的一對鍵/值(或好幾對)
+  + 範例: 假如我們只想要取得被關閉纜椅的名稱,可以傳入一個過濾回應的引數
+    * ```js
+        query closedLifts {
+          allLifts(status: CLOSED) {
+            name
+            status
+          }
+        }
+      ```
+    * ![query argument filter](./query%20argument%20filter.png)
+- 我們也可以使用引數來選擇我們指定要取得的資料
+  + 範例: 假如我們要查詢某個纜椅的狀態,可以用它的專屬代碼來選擇它
+    * ```js
+        query jazzCatStatus {
+          Lift(id: "jazz-cat") {
+            name
+            status
+            night
+            elevationGain
+          }
+        }
+      ```
+    * ![query argument specific id](./query%20argument%20specific%20id.png)
 
 
 
