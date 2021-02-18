@@ -143,6 +143,64 @@ GraphQL 查詢
     * ![query argument specific id](./query%20argument%20specific%20id.png)
 
 
+邊與連結
+----
+- 在GraphQL查詢語言中,欄位可分為**純量型態**或**物件型態**
+  + 純量型態類似其他語言中的基本型態。它們是選擇組的葉節點
+    * GraphQL內建5種純量型態
+      * 整數(Int)
+      * 浮點數(Float)
+      * 字串(String)
+      * 布林(Boolean)
+      * 專屬代碼(ID)
+  + GraphQL物件型態是在schema內定義的一或多個欄位群組,它們定義了應回傳的JSON物件的外形。由於JSON我們可以藉由查詢某個物件來取得與它有關的物件的細節來將物件連結在一起
+    * ```js
+        query trailsAccessedByJazz {
+          Lift(id: "jazz-cat") {
+            capacity
+            trailAccess {
+              name
+              difficulty
+            }
+          }
+        }
+      ```
+    * ![nested query](./nested%20query.png)
+    * 我們的選擇組包含一個對於`capacity`欄位的請求。`capacity`是純量型態,它會回傳一個代表"一台纜椅可搭載的人數"的整數。`trailAccess`欄位屬於`Trail`型態(物件型態)。在這個範例中,`trailAccess`會回傳一個已經過濾後、可用Jazz Cat抵達的雪道清單。因為`trailAccess`是隸屬於`Lift`型態中的欄位,API可使用父物件(也就是`Jazz Cat Lift`)的資料來過濾回傳的雪道清單
+  + 以上的操作範例查詢兩種資料型態(纜椅與雪道)之間的**一對多連結**。一台纜椅與許多與它有關的雪道相連。如果我們從`Lift`節點開始遍歷圖,可透過命名為`trailAccess`的邊前往與該纜椅連接的一個或多個`Trail`節點。如果我們想要從`Trail`節點走回`Lift`節點,因為這張圖是**無向的**,所以可以做到
+    * ```js
+        query liftToAccessTrail {
+          Trail(id:"dance-fight") {
+            groomed
+            accessedByLifts {
+              name
+              capacity
+            }
+          }
+        }
+      ```
+    * ![nested query-reverse](./nested%20query-reverse.png)
+    * 在`liftToAccessTrail` query中,我們選擇一個名為"Dance Fight"的`Trail`。`groomed`欄位回傳一個布林純量型態,可讓我們知道`Dance Fight`是否被整理過了。`accessedByLifts`欄位回傳可帶著滑雪客前往`Dance Fight`雪道的纜椅
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Resource Links
