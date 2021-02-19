@@ -264,6 +264,12 @@ Fragment(片段)
   + 這樣修改`liftInfo` fragment的選擇組會讓使用這個fragment的每一個query選擇較少的資料
 
 
+聯合型態(Union Types)
+----
+- 如果我們想要取得含有多個型態的串列,可建立**聯合型態**,它可建立兩種不同的物件型態之間的關係
+- 可參考[schedule app](https://graphqlbin.com/v2/ANgjtr)的GraphQL API範例。假如我們想要幫大學生建立一個行程app,讓他們可以在行事曆中加入`Workout`、`Study Group`事件
+  + 當我們查看GraphQL Playground內的文件時,會看到`AgendaItem`是一個聯合型態(union types),也就是它可以回傳多種型態。具體來說,`AgendaItem`可回傳`Workout`＆`Study Group`事件,它們都是大學生行事曆裡面可能有的東西
+
 
 
 
