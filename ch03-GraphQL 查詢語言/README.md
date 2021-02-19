@@ -214,6 +214,54 @@ Fragment(片段)
     }
   ```
   + ![multiple duplicate fields query without fragments](./multiple%20duplicate%20fields%20query%20without%20fragments.png)
+  + 以上的query範例,我們想要取得的River Run雪道資訊有一些欄位與`Lift`型態的欄位相同,因此我們可以建立一個fragment來協助減少query重複的地方
+    * ```js
+        fragment liftInfo on Lift {
+          name
+          status
+          capacity
+          night
+          elevationGain
+        }
+      ```
+    * fragment是屬於特定型態的選擇組,所以我們必須在fragment的定義中指定它所屬的型態。在這個範例中的fragment稱為`liftInfo`,它是`Lift`型態的選擇組
+    * 當我們要在另一個選擇組中加入`liftInfo` fragment欄位時,可在fragment名稱前面加上三個句點(`...`)來做這件事
+      * ```js
+          fragment liftInfo on Lift {
+            name
+            status
+            capacity
+            night
+            elevationGain
+          }
+
+          query {
+            Lift(id: "jazz-cat") {
+              ...liftInfo
+              trailAccess {
+                name
+                difficulty
+              }
+            }
+            Trail(id: "river-run") {
+              name
+              difficulty
+              accessedByLifts {
+                ...liftInfo
+              }
+            }
+          }
+          ```
+      * ![multiple duplicate fields query with fragment](./multiple%20duplicate%20fields%20query%20with%20fragment.png)
+- **這種語法類似Javascript的spread運算子,它也有類似的用途---將一個物件的鍵與值指派給另一個物件**。這三個句點(`...`)可讓GraphQL將fragment的欄位指派給當前的選擇組
+- fragment有個很棒的優點在於,我們只需要修改一個fragment,就可以修改在許多不同的query裡面的選擇組
+  + ```js
+      fragment liftInfo on Lift {
+        name
+        status
+      }
+      ```
+  + 這樣修改`liftInfo` fragment的選擇組會讓使用這個fragment的每一個query選擇較少的資料
 
 
 
