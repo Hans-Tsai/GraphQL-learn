@@ -269,7 +269,58 @@ Fragment(片段)
 - 如果我們想要取得含有多個型態的串列,可建立**聯合型態**,它可建立兩種不同的物件型態之間的關係
 - 可參考[schedule app](https://graphqlbin.com/v2/ANgjtr)的GraphQL API範例。假如我們想要幫大學生建立一個行程app,讓他們可以在行事曆中加入`Workout`、`Study Group`事件
   + 當我們查看GraphQL Playground內的文件時,會看到`AgendaItem`是一個聯合型態(union types),也就是它可以回傳多種型態。具體來說,`AgendaItem`可回傳`Workout`＆`Study Group`事件,它們都是大學生行事曆裡面可能有的東西
-
+    * 當我們要編寫學生行事曆的query時,可使用fragment來定義當AgendaItem是Workout時想要選擇的欄位,以及當AgendaItem是StudyGroup時想要選擇的欄位
+    * ```js
+        query schedule {
+          agenda {
+            ...on Workout {
+              name
+              reps
+            }
+            ... on StudyGroup {
+              name
+              subject
+              students
+            }
+          }
+        }
+      ```
+    * 以下是這個query的回應
+      * ```js
+          {
+            "data": {
+              "agenda": [
+                {
+                  "name": "Comp Sci",
+                  "subject": "Computer Science",
+                  "students": 12
+                },
+                {
+                  "name": "Cardio",
+                  "reps": 100 
+                },
+                {
+                  "name": "Poets",
+                  "subject": "English 101",
+                  "students": 3
+                },
+                {
+                  "name": "Math Whiz",
+                  "subject": "Mathematics",
+                  "students": 12
+                },
+                {
+                  "name": "Upper Body",
+                  "reps": 10
+                },
+                {
+                  "name": "Lower Body",
+                  "reps": 20
+                }
+              ]
+            }
+          }
+        ```
 
 
 
