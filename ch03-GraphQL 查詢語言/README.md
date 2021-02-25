@@ -393,6 +393,43 @@ Fragment(片段)
   + 以上的query代表,當我們修改`schedule` query的時候,在`ScheduleItem`是`Workout`時,額外請求`reps`
 
 
+變動(Mutations)
+----
+- 我們會用`query`來描述在GraphQL中發生的所有讀取。若要寫入新資料,則我們需要使用`mutation`(變動)
+  + `mutation`的定義類似query,它們都有名稱,也都可以擁有"可回傳物件型態或純量的選擇組",而不同之處在於`mutation`可執行一些影響後端資料狀態的修改
+- `Mutation`是一種根物件型態。API的schema定義了這個型態可用的欄位
+- 以下是一個可以新增一首歌曲的`mutation`
+  + ```js
+      mutation createSong {
+        addSong(title: "No Scrubs", numberOne: true, performerName: "TLC") {
+          id
+          title
+          numberOne
+        }
+      }
+      ```
+  + 我們可以使用這個範例來創造新歌,利用引數將`title`、`numberOne`狀態、`performerName`傳給這個mutation之後,它會將這首新歌加入資料庫。如果這個mutation欄位會回傳物件,你就要在這個mutation後面加入一個選擇組。在本例中,此mutation完成後會回傳`Song`型態,裡面有剛才創造的歌曲的資料。我們可以在mutation後面選擇新個的`id`、`title`、`numberOne`狀態
+    * ```js
+        {
+          "data": {
+            "addSong": {
+              "id": "5aca534f4bb1de07cb6d73ae",
+              "title": "No Scrubs",
+              "numberOne": true
+            }
+          }
+        }
+      ```
+- 我們也可以使用mutation來更改既有的資料。當我們想要更改Snowtooth的纜椅狀態時,可以使用mutation
+  + ```js
+      mutation closeLift {
+        setLiftStatus(id: "jazz-cat" status: CLOSED) {
+          name
+          status
+        }
+      }
+      ```
+  + 我們可以使用這個mutation將Jazz Cat纜椅的狀態從`open`改為`closed`。我們可以在mutation後面的選擇組裡面選擇最近被更改的`Lift`的欄位。在本例中,我們取得被改變的纜椅的`name`、以及新的`status`
 
 
 
