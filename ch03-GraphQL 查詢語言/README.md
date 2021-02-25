@@ -346,8 +346,51 @@ Fragment(片段)
 
 介面(Interfaces)
 ----
-- 介面是處理可被單個欄位回傳的多種物件型態的另一個選項。
-
+- 介面是處理可被單個欄位回傳的多種物件型態的另一種選項。介面是一種抽象型態,其用途是建立應該在類似的物件型態中實作的欄位串列。當一個型態實作介面時,那個型態就有介面的所有欄位,通常也會有一些自己的欄位
+- 舉例來說,我們可能有一個介面叫做`Character`,來代表任何一個在星際大戰三部曲中的角色
+  + ```js
+      interface Character {
+        id: ID!
+        name: String!
+        friends: [Character]!
+        appearsIn: [Episode]!
+      }
+    ```
+- 這也意味著任何一個有實作`Character`介面的型別,都必須要擁有以上這些確切的欄位,並帶有這些參數與回傳型別
+  + 舉例來說,這些都是有可能會實作`Character`介面的型別
+  + ```js
+      type Human implements Character {
+        id: ID!
+        name: String!
+        friends: [Character]
+        appearsIn: [Episode]!
+        starships: [Starship]
+        totalCredits: Int
+      }
+      
+      type Droid implements Character {
+        id: ID!
+        name: String!
+        friends: [Character]
+        appearsIn: [Episode]!
+        primaryFunction: String
+      }
+      ```
+  + 我們可以看到這些類別都擁有`Character`介面的所有欄位,並也同時帶來了額外的欄位,像是`totalCredits`、`starships`、`primaryFunction`,這些都是明確地對於特定的`Character`型別之下才有的欄位
+- 當我們查詢一個介面時,也可以在收到特定的物件型態時使用fragment來選擇額外的欄位
+  + ```js
+      query schedule {
+        agenda {
+          name
+          start
+          end
+          ... on Workout {
+            reps
+          }
+        }
+      }
+      ```
+  + 以上的query代表,當我們修改`schedule` query的時候,在`ScheduleItem`是`Workout`時,額外請求`reps`
 
 
 
