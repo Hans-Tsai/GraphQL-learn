@@ -451,6 +451,36 @@ Fragment(片段)
     * 當你傳送引數資料時,變數的功能很強大,它不但可讓你的mutation在測試的過程中更有條理,當你連接用戶端界面時,使用動態輸入也有很大的幫助
 
 
+訂閱(Subscriptions)
+----
+- GraphQL的第三種操作類型是訂閱(subscription)。有時用戶端想要取得伺服器傳送的即時更新。訂閱可讓我們監聽GraphQL API的即時資料變更
+  + GraphQL的訂閱功能來自Facebook的實際使用案例。這個團隊想要在不重新整理網頁的情況下,顯示關於貼文獲得的讚(Live Likes)數量的即時資訊。Live Likes是以訂閱來製作的即時使用案例。每一個用戶端都會訂閱like事件,並即時看到like的更新
+  + 如同`query`、`mutation`一樣,`subscription`是一種根型態。我們必須在API schema的subscription型態下的欄位中定義用戶端可以監聽的資料變更。編寫GraphQL query來監聽subscription的做法類似定義其它操作的方式
+- 舉個例子,我們可以用subscription來監聽任何纜椅狀態的變動。當我們執行這個subscription時,可以用WebSocket來監聽纜椅狀態的改變。請留意在GraphQL Playground按下播放按鈕無法立刻收到回傳的資料。當subscription被送到伺服器時,這個subscription會監聽資料的任何改變
+  + ```js
+      subscription {
+        liftStatusChange {
+          name
+          capacity
+          status
+        }
+      }
+      ```
+    * ![GraphQL Subscription](./GraphQL%20Subscription.png)
+  + 如果你想要看到subscription收到資料,就必須透過mutation讓資料的狀態有所改變。我們可以打開一個新的視窗或標籤頁,來用mutation傳送那個改變。當subscription已經在GraphQL Playground標籤中運行時,我們就無法使用同一個視窗或標籤來執行其它的操作了
+  + ```js
+      mutation closeLift{
+          setLiftStatus(id: "astra-express" status:HOLD
+          
+          ) {
+            name
+            status
+          }
+        }
+      ```
+    * ![mutation cooperate with subscription](./mutation%20cooperate%20with%20subscription.png)
+- subscription跟query、mutation不同的地方在於,subscription會保持開啟。接下來,每當有纜椅的狀態改變時,新的資料就會被推送到這個subscription。若要停止監聽狀態變動,我們就必須先取消subscription
+  + 當使用GraphQL Playground時,只要按下停止按鈕即可。不幸的是,用GraphiQL來取消subscription唯一的做法是關閉運行該subscription的瀏覽器標籤
 
 
 
