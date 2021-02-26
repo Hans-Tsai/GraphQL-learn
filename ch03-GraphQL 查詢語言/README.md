@@ -516,6 +516,44 @@ Fragment(片段)
   + ![GraphQL introspection-type query](./GraphQL%20introspection-type%20query.png)
 
 
+抽象語法樹(abstract syntax tree, AST)
+----
+- query文件是個字串。當我們傳送query給GraphQL API時,字串毀被解析成抽象語法樹,並且在操作執行之前進行驗證。抽象語法樹(anstract syntax tree, AST)是一種代表query的階層式物件。AST是個含有內嵌欄位的物件,裡面的欄位代表GraphQL query的細節
+- 解析程序
+  + 第一步驟: 將字串解析成一堆較小的片段,這個步驟包括將關鍵字、引數,甚至括號與冒號解析成單獨的標記,這個程序稱為詞法解析(lexical analysis)
+  + 第二步驟: 將詞法分析後的query解析成AST。使用AST可讓動態修改與驗證的query的工作輕鬆許多
+- 舉個例子來說明,你的query一開始是GraphQL文件。文件至少有一個定義,也可能有一串定義。定義只有可能是兩種型態之一: `OperationDefinition`或`FragmentDefinition`。下面的文件範例有3個定義: 2項操作與一個fragment
+  + ```js
+      query jazzCatStatus{
+        Lift(id: "jazz-cat") {
+          name
+          night
+          elevationGain
+          trailAccess {
+            name
+            difficulty
+          }
+        }
+      }
+
+      mutation closeLift($lift: ID!){
+        setLiftStatus(id: $lift, status: CLOSED) {
+          ...liftStatus
+        }
+      }
+
+      fragment liftStatus on Lift {
+        name
+        status
+      }
+      ```
+  + 一個`OperationDefinition`只能含有三種操作型態之一: `query`、`mutation`、`subscription`。每一個操作定義都有OperationType與SelectionSet
+  + 在每一個操作後面的大括號內都有該操作的`SelectionSet`,它們就是我們用引數來查詢的欄位。例如: `Lift`欄位是`jazzCatStatus` query的`SelectionSet`,而`setLiftStatus`欄位是`closeLift` mutation的選擇組
+  + 選擇組可嵌套在另一個選擇組裡面。`jazzCatStatus` query有三個嵌套的選擇組。第一個`SelectionSet`含有`Lift`欄位。在它裡面有個`SelectionSet`含有`name`、`night`、`elevationGain`、`trailAccess`欄位。在`trailAccess`欄位內有另一個`SelectionSet`,含有每個雪道的`name`、`difficulty`欄位
+  + GraphQL可以遍歷這個AST並且用GraphQL語言與目前的schema來驗證它的細節。如果查詢語言是正確的,且schema含有我們請求的欄位與型態,該操作就會執行。如果情況不是如此,就會回傳特定的錯誤
+  + 此外,AST物件比較容易修改。如果我們想要在`jazzCatStatus` query附加開放的纜椅數量,可直接修改AST。我們只要為操作加入一個額外的`SelectionSet`就可以了。AST是GraphQL很重要的成分。每一項操作都會被解析成AST,以便對它進行驗證並最終執行它
+
+
 
 
 
