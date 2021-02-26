@@ -432,12 +432,23 @@ Fragment(片段)
   + 我們可以使用這個mutation將Jazz Cat纜椅的狀態從`open`改為`closed`。我們可以在mutation後面的選擇組裡面選擇最近被更改的`Lift`的欄位。在本例中,我們取得被改變的纜椅的`name`、以及新的`status`
 
 
-
-
-
-
-
-
+使用查詢變數 (query variables)
+----
+- 除了使用mutation引數傳送新字串值來更改資料之外,**另一種做法是使用輸入變數,以變數取代query內的靜態值可讓我們變成傳入動態值**
+  + 舉個例子,在`addSong` mutation中,我們要用變數名稱來取代字串,在GraphQL中,變數必定以`$`字元開頭
+  + ```js
+      mutation createSong($title:String! $numberOne:Int $by:String!) {
+        addSong(title:$title, numberOne:$numberOne, performerName:$by) {
+          id
+          title
+          numberOne
+        }
+      }
+      ```
+  + 我們將靜態值換成`$variable`,接著宣告mutation可接受`$variable`。接下來,我們用引數名稱來對應每一個`$variable`名稱
+  + ![GraphQL Playground query variable ](./GraphQL%20Playground%20query%20variable%20.png)
+    * GraphiQL與GraphQL Playground都有一個Query Variables視窗,我們在這裡用JSON物件來傳送輸入資料,請務必用正確的變數名稱作為JSON鍵
+    * 當你傳送引數資料時,變數的功能很強大,它不但可讓你的mutation在測試的過程中更有條理,當你連接用戶端界面時,使用動態輸入也有很大的幫助
 
 
 
