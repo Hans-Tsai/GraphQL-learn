@@ -483,6 +483,46 @@ Fragment(片段)
   + 當使用GraphQL Playground時,只要按下停止按鈕即可。不幸的是,用GraphiQL來取消subscription唯一的做法是關閉運行該subscription的瀏覽器標籤
 
 
+自我查詢(Introspection)
+----
+- 自我查詢(introspection)是GraphQL最強大的功能之一。自我查詢是指查詢目前的API的schema。自我查詢是將這些精心建構的GraphQL文件加入GraphiQL Playground介面的方式
+- 舉個例子,假如我們想要知道可在`Snowtooth`中使用哪種GraphQL型態(types),可以執行`__schema` query來查看該資訊
+  + ```js
+      query {
+        __schema {
+          types {
+            name
+            description
+          }
+        }
+      }
+      ```
+  + ![GraphQL introspection-schema query](./GraphQL%20introspection-schema%20query.png)
+- 當我們執行這個query時,可以看到這個API可用的每一個型態,包括根型態、自訂型態,甚至純量型態。如果你想要查看特定型態的資料,可執行`__type` query,並用引數來傳送想要查詢的型態名稱
+  + ```js
+      query liftDetails {
+        __type(name: "Lift") {
+          name
+          fields {
+            name
+            description
+            type {
+              name
+            }
+          }
+        }
+      }
+      ```
+  + ![GraphQL introspection-type query](./GraphQL%20introspection-type%20query.png)
+
+
+
+
+
+
+
+
+
 
 Resource Links
 ----
